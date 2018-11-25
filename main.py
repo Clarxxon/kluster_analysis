@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from scipy.spatial.distance import cdist
+from scipy.spatial.distance import cdist 
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib.colors as pltc
 import random
 
-
+# get colors array
 def get_cmap(n, name='hsv'):
     return plt.cm.get_cmap(name, n)
 
@@ -30,21 +30,7 @@ X = np.zeros((261, 2))
 X[:, 0] = data['hp']
 X[:, 1] = data['cubicinches']
 
-
-# X = np.zeros((150, 2))
-# klasses = [1,2,3]
-# np.random.seed(seed=42)
-# X[:50, 0] = np.random.normal(loc=0.0, scale=.3, size=50)
-# X[:50, 1] = np.random.normal(loc=0.0, scale=.3, size=50)
-
-# X[50:100, 0] = np.random.normal(loc=2.0, scale=.5, size=50)
-# X[50:100, 1] = np.random.normal(loc=-1.0, scale=.2, size=50)
-
-# X[100:150, 0] = np.random.normal(loc=-1.0, scale=.2, size=50)
-# X[100:150, 1] = np.random.normal(loc=2.0, scale=.5, size=50)
-
 # show data
-plt.figure(figsize=(5, 5))
 plt.plot(X[:, 0], X[:, 1], 'bo')
 plt.show()
 
@@ -56,10 +42,10 @@ centroids = []
 for i in range(len(klasses)):
     print([random.uniform(min(X[:, 0]), max(X[:, 0])),
            random.uniform(min(X[:, 1]), max(X[:, 1]))])
+
     centroids.append([random.uniform(min(X[:, 0]), max(X[:, 0])),
                       random.uniform(min(X[:, 1]), max(X[:, 1]))])
 print(centroids)
-
 
 centroids = np.asarray(centroids)
 
@@ -67,7 +53,6 @@ cent_history = []
 cent_history.append(centroids)
 # ----------------------------------------------------------------------
 # plot with centerts
-plt.figure(figsize=(5, 5))
 plt.plot(X[:, 0], X[:, 1], 'bo')
 
 for j in range(len(klasses)):
@@ -95,10 +80,10 @@ for i in range(100):
     cent_history.append(centroids)
 
     print("STEP NUMBER ", steps)
-    print("centroids difference", cdist(
-        cent_history[len(cent_history)-2], centroids))
+    print("centroids difference", cdist(cent_history[len(cent_history)-2], centroids))
     delta = cdist(cent_history[len(cent_history)-2], centroids)
     stop = False
+    
     for i in range(len(delta)):
         if(delta[i, i] < epsilon):
             stop = True
@@ -120,9 +105,9 @@ for i in range(steps):
                     c=cmap(j), label=('cluster #' + str(klasses[j])))
         plt.scatter(cent_history[i][j, 0], cent_history[i][j, 1],s=220,c=cmap(j))
 
-    
- 
     plt.legend(loc=0)
+
+    
     print("i is",i)
     if(i == (steps-1)):
         plt.title('Step FINISH {:}'.format(i + 1))
