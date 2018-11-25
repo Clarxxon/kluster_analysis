@@ -82,13 +82,12 @@ for i in range(100):
     print("STEP NUMBER ", steps)
     print("centroids difference", cdist(cent_history[len(cent_history)-2], centroids))
     delta = cdist(cent_history[len(cent_history)-2], centroids)
-    stop = False
+    stop = True
     
     for i in range(len(delta)):
-        if(delta[i, i] < epsilon):
-            stop = True
-        else:
+        if(delta[i, i] > epsilon):
             stop = False
+        
 
     if(stop):
         break
